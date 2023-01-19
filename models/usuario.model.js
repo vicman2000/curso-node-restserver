@@ -36,7 +36,8 @@ const UsuarioSchema =  Schema({
 
 // Sobreescritura de un metohodo para que no se muestra la clave en el resultado de insertar nuevo usuario
 UsuarioSchema.methods.toJSON = function() {
-    const { __v, password, ...usuario} = this.toObject(); /**Omite mostrar los campos version y password */
+    const { __v, password, _id, ...usuario} = this.toObject(); /**Omite mostrar los campos version y password */
+    usuario.uid = _id;
     return usuario;
 }
 

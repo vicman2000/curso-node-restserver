@@ -95,18 +95,20 @@ const usuariosPost = async (req, res) => {
 
 // Proceso para eliminar registro
 const usuariosDelete = async(req, res = response) => {
-    const id  = req.params.id;
+    const { id }  = req.params;
+    
 
     // // Borrarde forma física el eregistro
     // const usuario = await usuarioModel.findByIdAndDelete(id);
 
     // Borrado lógico
     const usuario = await usuarioModel.findByIdAndUpdate(id, {estado: false} )
-
+    const usuarioAutenticado = req.usuario;
 
       res.json({
           msg: `Registro con id: ${id} ha sido eliminado`,
-          usuario
+          usuario,
+          usuarioAutenticado
       })
   };
   

@@ -6,7 +6,9 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
-    this.usuariosRouter = "/api/usuarios";
+    
+    this.usuariosPath = "/api/usuarios";
+    this.authPath = "/api/auth";
 
     //Connect to DataBase
     this.connectDb();
@@ -22,6 +24,7 @@ class Server {
     await dbConnect();
   }
 
+  
   middlewares() {
     // Cors
     this.app.use(cors());
@@ -33,10 +36,14 @@ class Server {
     this.app.use(express.static("public"));
   }
 
+
   routes() {
-    this.app.use(this.usuariosRouter, require("../src/routes/usuarios.route"));
+    this.app.use(this.authPath, require("../src/routes/auth.route"));
+    this.app.use(this.usuariosPath, require("../src/routes/usuarios.route"));
   }
 
+  
+  
   listen() {
     this.app.listen(this.port, () => {
       console.log(`Servidor corriendo en puerto:${this.port}`);
